@@ -1,0 +1,69 @@
+<!doctype html>
+
+<script src="https://unpkg.com/vue"></script>
+
+<div id="app">
+  <some-input v-model="selected"></some-input>
+  <h6>{{ selected }}</h6>
+  <benefits-calculator-input v-model="benefits.commute" placeholder="commute saved"></benefits-calculator-input>
+  <h6>{{ benefits.commute }}</h6>
+  <benefits-calculator-input v-model="benefits.meals" placeholder="meals saved"></benefits-calculator-input>
+  <h6>{{ benefits.meals }}</h6>
+</div>
+
+
+<script>
+
+const someInput = {
+	props: {
+		value: { default: null }
+	},
+	template: `<select @input="$emit(\'input\', $event.target.value)">
+	<option value="0.5">America</option>
+	<option value="0.25">China</option></select>
+	`
+}	
+
+const benefitsCalculatorInput = {
+  props: {	
+    value: { default: null }
+  },
+  template: `<input type="number" :value="value" @input="$emit('input', $event.target.value)" />`
+}
+
+new Vue({
+  el: '#app',
+  components: {
+  	  'some-input': someInput,
+      'benefits-calculator-input': benefitsCalculatorInput
+  },
+  data: function() {
+    return {
+    	selected: null,
+		benefits: {
+      		commute: null,
+      		meals: null
+  		}
+    };
+  },
+  methods: {
+    updateCoachStatus: function(){
+      this.benefits.commute = 200;
+      this.benefits.meals = 400;
+    },
+    inputListeners: function () {
+  		var vm = this;
+  		return Object.assign({},
+    	this.$listeners, {
+      		input: function (event) {
+      			this.benefits.commute *= 5;
+	        	vm.$emit('input', event.target.value);
+	      	}
+    	});
+	}
+  },
+  mounted: function () {
+    this.updateCoachStatus();
+  }
+});
+</script>

@@ -13,57 +13,60 @@
 
 
 <script>
-
-const someInput = {
-	props: {
-		value: { default: null }
-	},
-	template: `<select @input="$emit(\'input\', $event.target.value)">
-	<option value="0.5">America</option>
-	<option value="0.25">China</option></select>
-	`
-}	
-
-const benefitsCalculatorInput = {
-  props: {	
-    value: { default: null }
-  },
-  template: `<input type="number" :value="value" @input="$emit('input', $event.target.value)" />`
-}
-
-new Vue({
-  el: '#app',
-  components: {
-  	  'some-input': someInput,
-      'benefits-calculator-input': benefitsCalculatorInput
-  },
-  data: function() {
-    return {
-    	selected: null,
-		benefits: {
-      		commute: null,
-      		meals: null
-  		}
-    };
-  },
-  methods: {
-    updateCoachStatus: function(){
-      this.benefits.commute = 200;
-      this.benefits.meals = 400;
+  const someInput = {
+    props: {
+      value: { default: null }
     },
-    inputListeners: function () {
-  		var vm = this;
-  		return Object.assign({},
-    	this.$listeners, {
-      		input: function (event) {
-      			this.benefits.commute *= 5;
-	        	vm.$emit('input', event.target.value);
-	      	}
-    	});
-	}
-  },
-  mounted: function () {
-    this.updateCoachStatus();
-  }
-});
+    template: `<select>
+      <option v-for='selected of countries' :value="selected">{{selected}}</option>
+    </select>`
+  };
+
+  const benefitsCalculatorInput = {
+    props: {	
+      value: { default: null }
+    },
+    template: `<input type="number" :value="value" @input="$emit('input', $event.target.value)" />`
+  };
+
+  new Vue({
+    el: '#app',
+    components: {
+      'some-input': someInput,
+      'benefits-calculator-input': benefitsCalculatorInput
+    },
+    data: function() {
+      return {
+        selected: null,
+        benefits: {
+          commute: null,
+          meals: null
+        },
+        selected: 'china',
+        countries: ['china', 'ameria', 'taiwan']
+      };
+    },
+    methods: {
+      onChange: function(event) {
+        console.log(event.target.value);
+      },
+      updateCoachStatus: function(){
+        this.benefits.commute = 200;
+        this.benefits.meals = 400;
+      },
+      inputListeners: function () {
+        var vm = this;
+        return Object.assign({},
+        this.$listeners, {
+            input: function (event) {
+              this.benefits.commute *= 5;
+              vm.$emit('input', event.target.value);
+            }
+        });
+      }
+    },
+    mounted: function () {
+      this.updateCoachStatus();
+    }
+  });
 </script>

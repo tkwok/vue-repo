@@ -9,10 +9,19 @@
   }
 
   .input-container {
-    border: 1px solid #000;
+    border: 1px solid #eaeaea;
     border-radius: 4px;
     width: 100%;
     padding: 10px;
+  }
+
+  .input-container, .input-container input {
+    font-family: "Source Sans Pro", sans-serif;
+    font-size: 16px;
+  }
+
+  .input-container label {
+    color: #eaeaea;
   }
 
   .input-container input {
@@ -23,6 +32,12 @@
   .input-container input:focus {
     outline: none;
   }
+
+  input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 </style>
 
 <div id="app">
@@ -32,11 +47,11 @@
   ]" v-on:changed="eventChanged"></some-input>
   <h6>{{ selected }}</h6>
   <div class="input-container-parent">
-    <benefits-calculator-input v-model="benefits.commute" label="a label" title-field="a field" placeholder="commute saved"></benefits-calculator-input>
+    <benefits-calculator-input v-model="benefits.commute" label="Rent"  placeholder="commute saved"></benefits-calculator-input>
   </div>
   <h6>{{ benefits.commute }}</h6>
   <div class="input-container-parent">
-    <benefits-calculator-input v-model="benefits.meals" label="a label2" title-field="a field 2" placeholder="meals saved"></benefits-calculator-input>
+    <benefits-calculator-input v-model="benefits.meals" label="Transportation" placeholder="meals saved"></benefits-calculator-input>
   </div>
   <h6>{{ benefits.meals }}</h6>
 </div>

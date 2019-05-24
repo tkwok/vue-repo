@@ -2,15 +2,42 @@
 
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 
+<style>
+
+  .input-container-parent {
+      width: 13%;
+  }
+
+  .input-container {
+    border: 1px solid #000;
+    border-radius: 4px;
+    width: 100%;
+    padding: 10px;
+  }
+
+  .input-container input {
+    width: 100%;
+    border: 0;
+  }
+
+  .input-container input:focus {
+    outline: none;
+  }
+</style>
+
 <div id="app">
   <some-input v-model="selected" :options="[
     { value: 1, name: 'Foo' },
     { value: 2, name: 'Bar' },
   ]" v-on:changed="eventChanged"></some-input>
   <h6>{{ selected }}</h6>
-  <benefits-calculator-input v-model="benefits.commute" placeholder="commute saved"></benefits-calculator-input>
+  <div class="input-container-parent">
+    <benefits-calculator-input v-model="benefits.commute" label="a label" title-field="a field" placeholder="commute saved"></benefits-calculator-input>
+  </div>
   <h6>{{ benefits.commute }}</h6>
-  <benefits-calculator-input v-model="benefits.meals" placeholder="meals saved"></benefits-calculator-input>
+  <div class="input-container-parent">
+    <benefits-calculator-input v-model="benefits.meals" label="a label2" title-field="a field 2" placeholder="meals saved"></benefits-calculator-input>
+  </div>
   <h6>{{ benefits.meals }}</h6>
 </div>
 
@@ -30,12 +57,19 @@
       <option v-for='item of options' :value='item.value'>{{item.name}}</option>
     </select>`
   };
-
+//<input type="number" :value="value" @input="$emit('input', $event.target.value)" />
   const benefitsCalculatorInput = {
     props: {
+      label: { type: String, required: true },
       value: { default: null }
     },
-    template: `<input type="number" :value="value" @input="$emit('input', $event.target.value)" />`
+    template: `
+        <div class="input-container"><template>
+        <label>
+          {{ label }}
+          <input type="number" :value="value" @input="$emit('input', $event.target.value)" />
+        </label>
+        </template></div>`
   };
 
   new Vue({

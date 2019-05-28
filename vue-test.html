@@ -3,7 +3,6 @@
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 
 <style>
-
   .input-container-parent {
       width: 13%;
   }
@@ -34,16 +33,16 @@
   }
 
   input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+  input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 </style>
 
 <div id="app">
   <some-input v-model="selected" :options="[
-    { value: 1, name: 'Foo' },
-    { value: 2, name: 'Bar' },
+    { value: 1, name: 'United States' },
+    { value: 2, name: 'China' },
   ]" v-on:changed="eventChanged"></some-input>
   <h6>{{ selected }}</h6>
   <div class="input-container-parent">
@@ -68,9 +67,10 @@ input[type=number]::-webkit-outer-spin-button {
         this.$emit('changed', value);
       }
     },
-    template: `<select @change="update($event.target.value) ">
-      <option v-for='item of options' :value='item.value'>{{item.name}}</option>
-    </select>`
+    template: `
+      <select @change="update($event.target.value) ">
+        <option v-for='item of options' :value='item.value'>{{item.name}}</option>
+      </select>`
   };
 //<input type="number" :value="value" @input="$emit('input', $event.target.value)" />
   const benefitsCalculatorInput = {

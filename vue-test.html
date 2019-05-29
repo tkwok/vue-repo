@@ -4,7 +4,7 @@
 
 <style>
   .input-container-parent {
-      width: 13%;
+    width: 13%;
   }
 
   .input-container {
@@ -12,6 +12,8 @@
     border-radius: 4px;
     width: 100%;
     padding: 10px;
+    cursor: pointer;
+    height: 36px;
   }
 
   .input-container, .input-container input {
@@ -19,8 +21,9 @@
     font-size: 16px;
   }
 
-  .input-container label {
+  .input-container .title {
     color: #eaeaea;
+    display: block;
   }
 
   .input-container input {
@@ -46,11 +49,13 @@
   ]" v-on:changed="eventChanged"></some-input>
   <h6>{{ selected }}</h6>
   <div class="input-container-parent">
-    <benefits-calculator-input v-model="benefits.commute" label="Rent"  placeholder="commute saved"></benefits-calculator-input>
+    <calculator-numeric-input
+      v-model="benefits.commute" label="Rent" @click="toggleView()"
+      placeholder="Rent"></calculator-numeric-input>
   </div>
   <h6>{{ benefits.commute }}</h6>
   <div class="input-container-parent">
-    <benefits-calculator-input v-model="benefits.meals" label="Transportation" placeholder="meals saved"></benefits-calculator-input>
+    <calculator-numeric-input v-model="benefits.meals" label="Transportation" placeholder="Transportation"></calculator-numeric-input>
   </div>
   <h6>{{ benefits.meals }}</h6>
 </div>
@@ -73,25 +78,69 @@
       </select>`
   };
 //<input type="number" :value="value" @input="$emit('input', $event.target.value)" />
-  const benefitsCalculatorInput = {
+  const calculatorNumericInput = {
     props: {
       label: { type: String, required: true },
       value: { default: null }
     },
+    data: function() {
+      return {
+        showEditView: false
+      }
+    },
+    directives: {
+      clickOutside: {
+        bind: function(el, binding, vnode) {
+          handleOutsideClick = (e) => {
+            e.stopPropagation();
+            const { handler } = binding.value;
+            let clickedOnExcludedEl = false;
+            // exclude.forEach(refName => {
+            //   if (!clickedOnExcludedEl) {
+            //     const excludedEl = vnode.context.$refs[refName];
+            //     clickedOnExcludedEl = excludedEl.contains(e.target)
+            //   }
+            // });
+            if (!el.contains(e.target)) {
+              vnode.context[handler]();
+            }
+          }
+          document.addEventListener('click', handleOutsideClick);
+          document.addEventListener('touchstart', handleOutsideClick);
+        },
+        unbind: function() {
+          document.removeEventListener('click', handleOutsideClick);
+          document.removeEventListener('touchstart', handleOutsideClick);
+        }
+      }
+    },
+    methods: {
+      toggleView: function() {
+        console.log('wwwwww');
+        if (this.showEditView) this.showEditView = !this.showEditView;
+      }
+    },
     template: `
-        <div class="input-container"><template>
-        <label>
-          {{ label }}
-          <input type="number" :value="value" @input="$emit('input', $event.target.value)" />
-        </label>
-        </template></div>`
+        <div class="input-container" @click="toggleView" v-click-outside="{ handler: 'toggleView' }">
+          <span v-if="!showEditView">
+            <span class="title">
+              {{ label }}
+            </span>
+            <span class="value">
+              {{ value }}
+            </span>
+          </span>
+          <span v-if="showEditView">
+            <input type="number" :value="value" @input="$emit('input', $event.target.value)" />
+          </span>
+        </div>`
   };
 
   new Vue({
     el: '#app',
     components: {
       'some-input': someInput,
-      'benefits-calculator-input': benefitsCalculatorInput
+      'calculator-numeric-input': calculatorNumericInput
     },
     data: function() {
       return {

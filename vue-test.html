@@ -95,12 +95,7 @@
             e.stopPropagation();
             const { handler } = binding.value;
             let clickedOnExcludedEl = false;
-            // exclude.forEach(refName => {
-            //   if (!clickedOnExcludedEl) {
-            //     const excludedEl = vnode.context.$refs[refName];
-            //     clickedOnExcludedEl = excludedEl.contains(e.target)
-            //   }
-            // });
+            
             if (!el.contains(e.target)) {
               vnode.context[handler]();
             }

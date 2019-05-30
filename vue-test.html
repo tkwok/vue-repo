@@ -89,34 +89,44 @@
       }
     },
     directives: {
-      clickOutside: {
-        bind: function(el, binding, vnode) {
-          handleOutsideClick = (e) => {
-            e.stopPropagation();
-            const { handler } = binding.value;
-            let clickedOnExcludedEl = false;
-            
-            if (!el.contains(e.target)) {
-              vnode.context[handler]();
+      'click-outside': {
+        bind: function(el, binding, vNode) {
+          // if (typeof binding.value !== 'function') {
+          // 	const compName = vNode.context.name;
+          //   let warn = `[Vue-click-outside:] provided expression '${binding.expression}' is not a function, but has to be`
+          //   if (compName) { warn += `Found in component '${compName}'` }
+          //
+          //   console.warn(warn);
+          // }
+          //const bubble = binding.modifiers.bubble;
+          const handler = (event) => {
+            if (binding.modifiers.bubble || (!el.contains(event.target) && el !== event.target)) {
+            	binding.value(event);
             }
-          }
-          document.addEventListener('click', handleOutsideClick);
-          document.addEventListener('touchstart', handleOutsideClick);
+          };
+
+          el.__vueClickOutside__ = handler;
+          document.addEventListener('click', handler);
         },
         unbind: function() {
-          document.removeEventListener('click', handleOutsideClick);
-          document.removeEventListener('touchstart', handleOutsideClick);
+          document.removeEventListener('click', el.__vueClickOutside__);
+          el.__vueClickOutside__ = null;
         }
       }
     },
     methods: {
-      toggleView: function() {
+      toggleView: function(event) {
+        event.stopPropagation();
         console.log('wwwwww');
-        if (this.showEditView) this.showEditView = !this.showEditView;
+        //if (this.showEditView) this.showEditView = !this.showEditView;
+      },
+      toggleOutsideView: function(event) {
+        event.stopPropagation();
+        console.log('outside');
       }
     },
     template: `
-        <div class="input-container" @click="toggleView" v-click-outside="{ handler: 'toggleView' }">
+        <div class="input-container" @click="toggleView" v-click-outside="toggleOutsideView">
           <span v-if="!showEditView">
             <span class="title">
               {{ label }}

@@ -90,23 +90,17 @@
     },
     directives: {
       'click-outside': {
-        bind: function(el, binding, vNode) {
-          // if (typeof binding.value !== 'function') {
-          // 	const compName = vNode.context.name;
-          //   let warn = `[Vue-click-outside:] provided expression '${binding.expression}' is not a function, but has to be`
-          //   if (compName) { warn += `Found in component '${compName}'` }
-          //
-          //   console.warn(warn);
-          // }
-          //const bubble = binding.modifiers.bubble;
-          const handler = (event) => {
-            if (binding.modifiers.bubble || (!el.contains(event.target) && el !== event.target)) {
-            	binding.value(event);
-            }
-          };
-
-          el.__vueClickOutside__ = handler;
-          document.addEventListener('click', handler);
+        bind: function(el, binding) {
+          if (typeof binding.value === 'function') {
+            const handler = (event) => {
+              if (binding.modifiers.bubble || -1 == event.path.indexOf(el)) {
+//              if (binding.modifiers.bubble || (!el.contains(event.target) && el !== event.target)) {
+              	binding.value(event);
+              }
+            };
+            el.__vueClickOutside__ = handler;
+            document.addEventListener('click', handler);
+          }
         },
         unbind: function() {
           document.removeEventListener('click', el.__vueClickOutside__);
@@ -117,11 +111,12 @@
     methods: {
       toggleView: function(event) {
         event.stopPropagation();
-        console.log('wwwwww');
-        //if (this.showEditView) this.showEditView = !this.showEditView;
+        this.showEditView = true;
+        console.log(event.target);
       },
       toggleOutsideView: function(event) {
         event.stopPropagation();
+        this.showEditView = false;
         console.log('outside');
       }
     },

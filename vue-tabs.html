@@ -1,6 +1,7 @@
 <!doctype html>
-
-
+<head>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+</head>
 <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.2/css/bulma.min.css" /> -->
 <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
 
@@ -88,7 +89,7 @@
     background-color: #e7e7e7;
     border-right: 1px solid #d7d7d7;
     opacity: 0.6;
-    padding: 10px;
+    width: 114px;
   }
 
   .tabs li svg {
@@ -104,7 +105,7 @@
   }
 
   .tabs li.is-active  {
-    background-color: #f9f9f9;
+    background-color: #fff;
     opacity: 1;
   }
 
@@ -131,10 +132,9 @@
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
-    margin-bottom: -1px;
-    padding: .5em 1em;
     vertical-align: top;
     text-align: center;
+    margin: 20px;
   }
 
   .tabs ul {
@@ -199,9 +199,7 @@
               <li v-for="tab in tabs" :class="{ 'is-active': tab.isActive }">
                   <a :href="tab.href" @click.prevent="selectTab(tab)">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 46" enable-background="0 0 46 46">
-
-                        <path v-for="path in tab.path" :d="path" />
-
+                      <path v-for="path in tab.path" :d="path" />
                     </svg>
                     {{ tab.name }}
                   </a>

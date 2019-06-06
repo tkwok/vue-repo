@@ -15,10 +15,12 @@
     background-color: #f9f9f9;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    font-size: 100%;
-    font-weight: 400;
-  }
+  h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: inherit;
+    font-weight: 600;
+    line-height: 1.2;
+    color: inherit;
+}
 
   div {
     display: block;
@@ -204,41 +206,55 @@
     margin: 0 auto;
     display: flex;
   }
+
+  .tab-content {
+    display: flex;
+  }
+
+  .description-container {
+    padding: 20px;
+  }
 </style>
 
 
 <div id="root" class="container">
   <tabs>
     <tab name="Manage" :selected="true" icon="manage">
-      <div class="features-container">
-        <ul class="list-features">
-          <li class="column-feature-name">
-            <p>Audit Management</p>
-          </li>
-          <li class="column-product-icon">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
-          </li>
-          <li class="column-product-icon">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
-          </li>
-          <li class="column-product-icon">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
-          </li>
-        </ul>
-        <ul class="list-features">
-          <li class="column-feature-name">
-            <p>Audit Management</p>
-          </li>
-          <li class="column-product-icon">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
-          </li>
-          <li class="column-product-icon">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
-          </li>
-          <li class="column-product-icon">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
-          </li>
-        </ul>
+      <div class="tab-content">
+        <div class="features-container">
+          <ul class="list-features">
+            <li class="column-feature-name">
+              <p>Audit Management</p>
+            </li>
+            <li class="column-product-icon">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
+            </li>
+            <li class="column-product-icon">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
+            </li>
+            <li class="column-product-icon">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
+            </li>
+          </ul>
+          <ul class="list-features">
+            <li class="column-feature-name">
+              <p>Authentication and Authorization</p>
+            </li>
+            <li class="column-product-icon">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
+            </li>
+            <li class="column-product-icon">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
+            </li>
+            <li class="column-product-icon">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
+            </li>
+          </ul>
+        </div>
+        <div class="description-container">
+          <h1>Title</h1>
+          <p>Description</p>
+        </div>
       </div>
     </tab>
     <tab name="Plan" icon="plan">

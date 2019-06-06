@@ -7,17 +7,18 @@
     padding-top: 40px;
     font-family: BlinkMacSystemFont,-apple-system,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Helvetica,Arial,sans-serif
   }
+
   h1, h2, h3, h4, h5, h6 {
-      font-size: 100%;
-      font-weight: 400;
+    font-size: 100%;
+    font-weight: 400;
   }
 
   div {
-      display: block;
+    display: block;
   }
 
   .container {
-      position: relative;
+    position: relative;
   }
 
   a {
@@ -37,16 +38,16 @@
 
   @media screen and (min-width: 1000px) {
     .container {
-        margin: 0 auto;
-        max-width: 960px;
-        width: 960px;
+      margin: 0 auto;
+      max-width: 960px;
+      width: 960px;
     }
   }
 
   .tabs-container {
     border: 1px solid #ddd;
   }
-  
+
   .tabs {
     -webkit-overflow-scrolling: touch;
     -webkit-touch-callout: none;
@@ -72,16 +73,29 @@
   .tabs:not(:last-child) {
     margin-bottom: 1.5rem;
   }
-  .tabs li.is-active a {
-      border-bottom-color: #00d1b2;
-      color: #00d1b2;
+
+  .tabs li {
+    background-color: #e7e7e7;
+    border-right: 1px solid #d7d7d7;
   }
+
+  .tabs li:last-child {
+    border-right: 0;
+  }
+
+  .tabs li.is-active  {
+      background-color: #f9f9f9;
+  }
+  .tabs li.is-active a {
+      color: #6b4fbb;
+  }
+
   .tabs a {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    border-bottom: 1px solid #dbdbdb;
-    color: #4a4a4a;
+    border-bottom: 1px solid #d7d7d7;
+    color: #828282;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -97,7 +111,7 @@
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    border-bottom: 1px solid #dbdbdb;
+    border-bottom: 1px solid #d7d7d7;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -110,21 +124,23 @@
     -ms-flex-pack: start;
     justify-content: flex-start;
     padding: 0;
+    margin: 0;
   }
+
   .tabs li {
     display: block;
-}
+  }
 </style>
 
 <div id="root" class="container">
   <tabs>
-    <tab name="Services" :selected="true">
+    <tab name="Manage" :selected="true">
       <h1>What we do</h1>
     </tab>
-    <tab name="Pricing">
+    <tab name="Plan">
       <h1>How much we do it for</h1>
     </tab>
-    <tab name="About Us">
+    <tab name="Create">
       <h1>Why we do it</h1>
     </tab>
   </tabs>
@@ -133,20 +149,20 @@
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 
 <script>
-Vue.component('tabs', {
+  Vue.component('tabs', {
     template: `
-        <div class="tabs-container">
-            <div class="tabs">
-              <ul>
-                <li v-for="tab in tabs" :class="{ 'is-active': tab.isActive }">
-                    <a :href="tab.href" @click="selectTab(tab)">{{ tab.name }}</a>
-                </li>
-              </ul>
-            </div>
-            <div class="tabs-details">
-                <slot></slot>
-            </div>
-        </div> `,
+      <div class="tabs-container">
+          <div class="tabs">
+            <ul>
+              <li v-for="tab in tabs" :class="{ 'is-active': tab.isActive }">
+                  <a :href="tab.href" @click="selectTab(tab)">{{ tab.name }}</a>
+              </li>
+            </ul>
+          </div>
+          <div class="tabs-details">
+              <slot></slot>
+          </div>
+      </div> `,
     data() {
       return {tabs: [] };
     },
@@ -160,33 +176,33 @@ Vue.component('tabs', {
         });
       }
     }
-});
+  });
 
-Vue.component('tab', {
-    template: `
-      <div v-show="isActive"><slot></slot></div>
-    `,
-    props: {
-      name: { required: true },
-      selected: { default: false }
-    },
-    data() {
-      return {
-          isActive: false
-      };
-    },
-    computed: {
-      href() {
-          return '#' + this.name.toLowerCase().replace(/ /g, '-');
+  Vue.component('tab', {
+      template: `
+        <div v-show="isActive"><slot></slot></div>
+      `,
+      props: {
+        name: { required: true },
+        selected: { default: false }
+      },
+      data() {
+        return {
+            isActive: false
+        };
+      },
+      computed: {
+        href() {
+            return '#' + this.name.toLowerCase().replace(/ /g, '-');
+        }
+      },
+      mounted() {
+        this.isActive = this.selected;
       }
-    },
-    mounted() {
-      this.isActive = this.selected;
-    }
-});
+  });
 
-new Vue({
+  new Vue({
     el: '#root'
-});
+  });
 
 </script>

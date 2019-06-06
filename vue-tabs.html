@@ -55,6 +55,9 @@
     }
   }
 
+
+
+
   .tabs-container {
     border: 1px solid #ddd;
   }
@@ -81,9 +84,6 @@
     white-space: nowrap;
   }
 
-  .tabs:not(:last-child) {
-    margin-bottom: 1.5rem;
-  }
 
   .tabs li {
     background-color: #e7e7e7;
@@ -166,18 +166,69 @@
     height: 44px;
     margin-bottom: 10px;
   }
+
+  .features-container {
+    padding: 30px 0;
+  }
+
+  ul.list-features {
+    list-style-type: none;
+    margin: 0;
+    display: flex;
+  }
+
+  ul.list-features p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  ul.list-features li.column-feature-name {
+    border-right: 1px solid #d7d7d7;
+    width: 304px;
+  }
+
+  .column-product-icon {
+    width: 114px;
+    border-right: 1px solid #d7d7d7;
+
+  }
+
+  .product-icon {
+    max-width: 50px;
+    margin: 0 auto;
+    display: flex;
+  }
 </style>
 
 <div id="root" class="container">
   <tabs>
     <tab name="Manage" :selected="true" icon="manage">
-      <h1>What we do</h1>
+      <div class="features-container">
+        <ul class="list-features">
+          <li class="column-feature-name">
+            <p>Audit Management</p>
+          </li>
+          <li class="column-product-icon">
+            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
+          </li>
+          <li class="column-product-icon">
+            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
+          </li>
+        </ul>
+        <ul class="list-features">
+          <li class="column-feature-name">
+            <p>Audit Management 232232434343433</p>
+          </li>
+          <li class="column-product-icon">
+          </li>
+        </ul>
+      </div>
     </tab>
     <tab name="Plan" icon="plan">
-      <h1>How much we do it for</h1>
+      <h1>Plan</h1>
     </tab>
     <tab name="Create" icon="create">
-      <h1>Why we do it</h1>
+      <h1>Create</h1>
     </tab>
   </tabs>
 </div>

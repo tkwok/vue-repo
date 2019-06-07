@@ -2,7 +2,6 @@
 <head>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 </head>
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.2/css/bulma.min.css" /> -->
 <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
 
 <style>
@@ -53,17 +52,6 @@
       width: 100%;
     }
   }
-
-  /* @media screen and (min-width: 1000px) {
-    .container {
-      margin: 0 auto;
-      max-width: 960px;
-      width: 960px;
-    }
-  } */
-
-
-
 
   .tabs-container {
     border: 1px solid #ddd;
@@ -184,16 +172,22 @@
     display: flex;
   }
 
-  ul.list-features p {
+  ul.list-features a {
     margin: 20px 0;
+    display: flex;
   }
 
   ul.list-features li.column-feature-name {
     border-right: 1px solid #d7d7d7;
     width: 304px;
   }
-  ul.list-features li.column-feature-name p {
+
+  ul.list-features li.column-feature-name a {
     color: #6b4fbb;
+  }
+
+  ul.list-features li.column-feature-name a:hover {
+    text-decoration: underline;
   }
 
   .column-product-icon {
@@ -224,7 +218,7 @@
         <div class="features-container">
           <ul class="list-features">
             <li class="column-feature-name">
-              <p>Audit Management</p>
+              <a>Audit Management</a>
             </li>
             <li class="column-product-icon">
               <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
@@ -252,8 +246,10 @@
           </ul>
         </div>
         <div class="description-container">
-          <h1>Title</h1>
-          <p>Description</p>
+          <span class="audit-management">
+            <h1>Audit Management - Gain visibility something</h1>
+            <p>Description about audit management</p>
+          </span>
         </div>
       </div>
     </tab>
@@ -329,6 +325,11 @@
         return {
             isActive: false
         };
+      },
+      methods: {
+        mouseOver: function(){
+          console.log("hoverrrrr");
+        }
       },
       computed: {
         href() {

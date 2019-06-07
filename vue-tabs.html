@@ -47,12 +47,6 @@
     width: 1200px;
   }
 
-  @media screen and (max-width: 1199px) {
-    .tabs ul li {
-      width: 100%;
-    }
-  }
-
   .tabs-container {
     border: 1px solid #ddd;
   }
@@ -77,6 +71,10 @@
     overflow: hidden;
     overflow-x: auto;
     white-space: nowrap;
+    border-top: 1px solid #d7d7d7;
+    border-right: 1px solid #d7d7d7;
+    border-left: 1px solid #d7d7d7;
+    border-bottom: 0;
   }
 
 
@@ -115,7 +113,7 @@
   }
 
 
-  .tabs a {
+  .tabs li a {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
@@ -129,14 +127,19 @@
     justify-content: center;
     vertical-align: top;
     text-align: center;
-    margin: 20px;
+    padding: 20px;
+    text-decoration: none;
+
+  }
+
+  .tabs li a:hover {
+    /* text-decoration: underline; */
   }
 
   .tabs ul {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    border-bottom: 1px solid #d7d7d7;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -207,6 +210,16 @@
 
   .description-container {
     padding: 20px;
+  }
+
+  .responsive {
+    background-color: green;
+  }
+
+  @media only screen and (max-width: 1199px) {
+    .tabs {
+      display: none;
+    }
   }
 </style>
 
@@ -280,7 +293,7 @@
 
   Vue.component('tabs', {
     template: `
-      <div class="tabs-container">
+      <div>
           <div class="tabs">
             <ul>
               <li v-for="tab in tabs" :class="{ 'is-active': tab.isActive }">
@@ -293,7 +306,7 @@
               </li>
             </ul>
           </div>
-          <div class="tabs-details">
+          <div>
               <slot></slot>
           </div>
       </div> `,
@@ -314,35 +327,53 @@
 
   Vue.component('tab', {
       template: `
-        <div v-show="isActive"><slot></slot></div>
+        <div v-show="isActive" class="tabs-container"><h1>{{ this.name }}</h1><slot></slot></div>
       `,
       props: {
         name: { required: true },
         selected: { default: false },
-        icon: { required: true}
+        icon: { required: true }
       },
       data() {
         return {
-            isActive: false
+          isActive: false,
+          isResponsiveView: false
         };
       },
-      methods: {
-        mouseOver: function(){
-          console.log("hoverrrrr");
-        }
+      created() {
+        window.addEventListener('resize', this.handleResize);
+        this.handleResize();
+      },
+      destroyed() {
+        window.removeEventListener('resize', this.handleResize);
       },
       computed: {
         href() {
-            return '#' + this.name.toLowerCase().replace(/ /g, '-');
+          return '#' + this.name.toLowerCase().replace(/ /g, '-');
         },
         path() {
           return icons[this.icon];
+        }
+      },
+      methods: {
+        handleResize() {
+          console.log('ran');
+          this.isResponsiveView = window.innerWidth < 1200;
+          //this.isActive = true;
         }
       },
       mounted() {
         this.isActive = this.selected;
       }
   });
+
+  Vue.component('feature-row', {
+    template: `
+      <ul>
+        <li></li>
+      </ul>
+    `
+  })
 
   new Vue({
     el: '#root'

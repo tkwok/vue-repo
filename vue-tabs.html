@@ -220,6 +220,10 @@
     .tabs {
       display: none;
     }
+
+    .tabs-container {
+      display: flex !important;
+    }
   }
 </style>
 
@@ -357,9 +361,7 @@
       },
       methods: {
         handleResize() {
-          console.log('ran');
           this.isResponsiveView = window.innerWidth < 1200;
-          //this.isActive = true;
         }
       },
       mounted() {

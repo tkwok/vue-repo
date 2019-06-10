@@ -31,6 +31,8 @@
     border-radius: 3px;
     background: #fff;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: row;
   }
 
   a {
@@ -44,7 +46,6 @@
   .container {
     margin: 0 auto;
     max-width: 1200px;
-    width: 1200px;
   }
 
   .tabs-container {
@@ -222,7 +223,15 @@
     }
 
     .tabs-container {
-      display: flex !important;
+      background: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 20px;
+      display: inherit !important;
+    }
+
+    .container {
+      box-shadow: none;
+      background: none;
     }
   }
 </style>
@@ -271,13 +280,10 @@
       </div>
     </tab>
     <tab name="Plan" icon="plan">
-      <h1>Plan</h1>
     </tab>
     <tab name="Create" icon="create">
-      <h1>Create</h1>
     </tab>
     <tab name="Verify" icon="verify">
-      <h1>Verify</h1>
     </tab>
   </tabs>
 </div>
@@ -331,7 +337,12 @@
 
   Vue.component('tab', {
       template: `
-        <div v-show="isActive" class="tabs-container"><h1>{{ this.name }}</h1><slot></slot></div>
+        <div v-show="isActive" class="tabs-container">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 46" enable-background="0 0 46 46">
+            <path v-for="path in this.path" :d="path" />
+          </svg>
+          <h2>{{ this.name }}</h2>
+          <slot></slot></div>
       `,
       props: {
         name: { required: true },

@@ -205,10 +205,6 @@
     display: flex;
   }
 
-  .tab-content {
-    display: flex;
-  }
-
   .description-container {
     padding: 20px;
   }
@@ -217,6 +213,9 @@
     background-color: green;
   }
 
+  .card-header {
+    display: none;
+  }
   @media only screen and (max-width: 1199px) {
     .tabs {
       display: none;
@@ -233,6 +232,14 @@
       box-shadow: none;
       background: none;
     }
+
+    .card-body {
+      display: flex;
+    }
+
+    .card-header {
+      display: flex;
+    }
   }
 </style>
 
@@ -240,44 +247,6 @@
 <div id="root" class="container">
   <tabs>
     <tab name="Manage" :selected="true" icon="manage">
-      <div class="tab-content">
-        <div class="features-container">
-          <ul class="list-features">
-            <li class="column-feature-name">
-              <a>Audit Management</a>
-            </li>
-            <li class="column-product-icon">
-              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
-            </li>
-            <li class="column-product-icon">
-              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
-            </li>
-            <li class="column-product-icon">
-              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
-            </li>
-          </ul>
-          <ul class="list-features">
-            <li class="column-feature-name">
-              <p>Authentication and Authorization</p>
-            </li>
-            <li class="column-product-icon">
-              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
-            </li>
-            <li class="column-product-icon">
-              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
-            </li>
-            <li class="column-product-icon">
-              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
-            </li>
-          </ul>
-        </div>
-        <div class="description-container">
-          <span class="audit-management">
-            <h1>Audit Management - Gain visibility something</h1>
-            <p>Description about audit management</p>
-          </span>
-        </div>
-      </div>
     </tab>
     <tab name="Plan" icon="plan">
     </tab>
@@ -316,7 +285,7 @@
               </li>
             </ul>
           </div>
-          <div>
+          <div class="card-body">
               <slot></slot>
           </div>
       </div> `,
@@ -338,10 +307,12 @@
   Vue.component('tab', {
       template: `
         <div v-show="isActive" class="tabs-container">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 46" enable-background="0 0 46 46">
-            <path v-for="path in this.path" :d="path" />
-          </svg>
-          <h2>{{ this.name }}</h2>
+          <div class="card-header">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 46" enable-background="0 0 46 46">
+              <path v-for="path in this.path" :d="path" />
+            </svg>
+            <h2>{{ this.name }}</h2>
+          </div>
           <slot></slot></div>
       `,
       props: {

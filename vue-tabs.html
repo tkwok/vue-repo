@@ -209,23 +209,42 @@
     padding: 20px;
   }
 
-  .responsive {
-    background-color: green;
-  }
-
   .card-header {
     display: none;
   }
-  @media only screen and (max-width: 1199px) {
+
+  @media only screen and (max-width: 748px) {
+    .tabs {
+      display: none;
+    }
+    
+    .tabs-container {
+      width: 100%;
+      display: inherit !important;
+
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: center;
+      border-bottom: 1px solid #d7d7d7;
+      padding-top: 15px;
+    }
+
+  }
+
+  @media only screen and (min-width: 749px) and (max-width: 1199px) {
     .tabs {
       display: none;
     }
 
     .tabs-container {
-      background: #fff;
+      background-color: #fff;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      padding: 20px;
       display: inherit !important;
+      flex-direction: column;
+      margin: 10px;
+      width: 47%
     }
 
     .container {
@@ -235,10 +254,14 @@
 
     .card-body {
       display: flex;
+      flex-flow: row wrap;
     }
 
     .card-header {
       display: flex;
+      justify-content: center;
+      border-bottom: 1px solid #d7d7d7;
+      padding-top: 15px;
     }
   }
 </style>
@@ -247,12 +270,18 @@
 <div id="root" class="container">
   <tabs>
     <tab name="Manage" :selected="true" icon="manage">
+      <div>
+        <h3>One</h3>
+      </div>
     </tab>
     <tab name="Plan" icon="plan">
+      <h3>Two</h3>
     </tab>
     <tab name="Create" icon="create">
+      <h3>Three</h3>
     </tab>
     <tab name="Verify" icon="verify">
+      <h3>Four</h3>
     </tab>
   </tabs>
 </div>
@@ -272,7 +301,7 @@
 
   Vue.component('tabs', {
     template: `
-      <div>
+      <div style="width: 100%">
           <div class="tabs">
             <ul>
               <li v-for="tab in tabs" :class="{ 'is-active': tab.isActive }">

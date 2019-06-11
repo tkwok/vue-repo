@@ -29,27 +29,38 @@
     position: relative;
     width: 100%;
     border-radius: 3px;
-    background: #fff;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     display: flex;
     flex-direction: row;
-  }
+    <div class="flex-cell product-feature"><a href="#">Audit Management</a></div>
+    <div class="flex-cell">
+      <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
+    </div>
+    <div class="flex-cell">
+      <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
+    </div>
+    <div class="flex-cell">
+      <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
+    </div>  }
 
   a {
-    color: #00d1b2;
     cursor: pointer;
     text-decoration: none;
     -webkit-transition: none 86ms ease-out;
     transition: none 86ms ease-out;
   }
 
+  a:hover {
+    text-decoration: underline;
+  }
   .container {
     margin: 0 auto;
-    max-width: 1200px;
+    width: 1151px;
   }
 
   .tabs-container {
     border: 1px solid #ddd;
+    background-color: #fff;
   }
 
   .tabs {
@@ -161,7 +172,6 @@
   }
 
   svg {
-    fill: #000;
     height: 44px;
     margin-bottom: 10px;
   }
@@ -213,17 +223,32 @@
     display: none;
   }
 
-  @media only screen and (max-width: 748px) {
-    .tabs {
-      display: none;
-    }
-    
-    .tabs-container {
-      width: 100%;
-      display: inherit !important;
 
-    }
 
+  .container-table {
+    margin: 20px;
+  }
+
+  .flex-table {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .flex-cell {
+    flex-grow: 1;
+    border-right: 1px solid #ccc;
+  }
+
+  .flex-cell {
+    text-align: center;
+  }
+
+  .product-feature {
+    padding: 10px;
+    text-align: left;
+  }
+
+  @media only screen and (max-width: 1199px) {
     .card-header {
       display: flex;
       justify-content: center;
@@ -231,6 +256,53 @@
       padding-top: 15px;
     }
 
+    .card-header a {
+      display: inline-flex;
+      color: #6b4fbb;
+      align-items: center;
+      fill: #6b4fbb;
+    }
+
+    .card-header a p {
+      margin: 0;
+      font-size: 26px;
+      padding-left: 10px;
+    }
+
+    .product-feature {
+      width: 100%;
+      text-align: center;
+    }
+
+    .flex-cell {
+      border-right: 0;
+    }
+
+    .container {
+      width: 100%;
+    }
+  }
+
+  @media only screen and (max-width: 748px) {
+    .container {
+      box-shadow: none;
+    }
+
+    .tabs {
+      display: none;
+    }
+
+    .tabs-container {
+      width: 100%;
+      display: inherit !important;
+      margin-bottom: 20px;
+      border: 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      align-items: center;
+      justify-content: center;
+
+
+    }
   }
 
   @media only screen and (min-width: 749px) and (max-width: 1199px) {
@@ -238,13 +310,17 @@
       display: none;
     }
 
+    .container {
+      box-shadow: none;
+    }
+
     .tabs-container {
-      background-color: #fff;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       display: inherit !important;
       flex-direction: column;
       margin: 10px;
-      width: 47%
+      width: 47%;
+      border: 0;
     }
 
     .container {
@@ -256,13 +332,6 @@
       display: flex;
       flex-flow: row wrap;
     }
-
-    .card-header {
-      display: flex;
-      justify-content: center;
-      border-bottom: 1px solid #d7d7d7;
-      padding-top: 15px;
-    }
   }
 </style>
 
@@ -270,8 +339,35 @@
 <div id="root" class="container">
   <tabs>
     <tab name="Manage" :selected="true" icon="manage">
-      <div>
-        <h3>One</h3>
+      <div class="container-table">
+        <div class="flex-table">
+          <div class="flex-cell product-feature"><a href="#">Audit Management</a></div>
+          <div class="flex-cell">
+            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
+          </div>
+          <div class="flex-cell">
+            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
+          </div>
+          <div class="flex-cell">
+            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
+          </div>
+        </div>
+        <div class="flex-table">
+          <div class="flex-cell product-feature"><a href="#">Audit Management</a></div>
+          <div class="flex-cell">
+            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
+          </div>
+          <div class="flex-cell">
+            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
+          </div>
+          <div class="flex-cell">
+            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
+          </div>
+        </div>
+      </div>
+      <div class="container-hover">
+        <h1>Title</h1>
+        <p>Description</p>
       </div>
     </tab>
     <tab name="Plan" icon="plan">
@@ -281,6 +377,24 @@
       <h3>Three</h3>
     </tab>
     <tab name="Verify" icon="verify">
+      <h3>Four</h3>
+    </tab>
+    <tab name="Package" icon="plan">
+      <h3>Two</h3>
+    </tab>
+    <tab name="Secure" icon="create">
+      <h3>Three</h3>
+    </tab>
+    <tab name="Release" icon="verify">
+      <h3>Four</h3>
+    </tab>
+    <tab name="Configure" icon="plan">
+      <h3>Two</h3>
+    </tab>
+    <tab name="Monitor" icon="create">
+      <h3>Three</h3>
+    </tab>
+    <tab name="Defend" icon="verify">
       <h3>Four</h3>
     </tab>
   </tabs>
@@ -337,17 +451,20 @@
       template: `
         <div v-show="isActive" class="tabs-container">
           <div class="card-header">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 46" enable-background="0 0 46 46">
-              <path v-for="path in this.path" :d="path" />
-            </svg>
-            <h2>{{ this.name }}</h2>
+            <a href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 46" enable-background="0 0 46 46">
+                <path v-for="path in this.path" :d="path" />
+              </svg>
+              <p>{{ this.name }}</p>
+            </a>
           </div>
           <slot></slot></div>
       `,
       props: {
         name: { required: true },
         selected: { default: false },
-        icon: { required: true }
+        icon: { required: true },
+        url: { default: false }
       },
       data() {
         return {

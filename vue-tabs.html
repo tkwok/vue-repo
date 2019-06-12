@@ -349,13 +349,10 @@
 
 <div id="root" class="container">
   <tabs>
-    <tab name="Manage" :selected="true" icon="manage">
-      <div class="container-feature">
-        <div class="container-table">
+    <tab name="Manage" :selected="true" icon="manage" :category-href="'http://www.google.com'">
+      <feature-table @clicked="onClickChild('323232')">
           <div class="flex-table">
-            <div class="flex-cell product-feature">
-              <a href="#">Audit Management</a>
-            </div>
+            <feature-link title="Audit Management" link="'http://www.yahoo.com'" rollover-text="'fsdfsdfsdfsdsd'"></feature-link>
             <div class="flex-cell">
               <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
             </div>
@@ -450,18 +447,14 @@
               <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
             </div>
           </div>
-        </div>
-        <div class="container-hover">
-          <h1>Title</h1>
-          <p>Description</p>
-        </div>
-      </div>
+
+      </feature-table>
     </tab>
-    <tab name="Plan" icon="plan">
+    <tab name="Plan" icon="plan" :category-href="'http://www.google.com'">
       <feature-table>
         <div class="flex-table">
           <div class="flex-cell product-feature">
-            <a href="#" @mouseover="hover='wowwwwww'">Audit Management</a>
+            <a href="#">Audit Management</a>
           </div>
           <div class="flex-cell">
             <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
@@ -475,28 +468,28 @@
         </div>
       </feature-table>
     </tab>
-    <tab name="Create" icon="create">
+    <tab name="Create" icon="create" :category-href="'http://www.google.com'">
       <h3>Three</h3>
     </tab>
-    <tab name="Verify" icon="verify">
+    <tab name="Verify" icon="verify" :category-href="'http://www.google.com'">
       <h3>Four</h3>
     </tab>
-    <tab name="Package" icon="plan">
+    <tab name="Package" icon="plan" :category-href="'http://www.google.com'">
       <h3>Two</h3>
     </tab>
-    <tab name="Secure" icon="create">
+    <tab name="Secure" icon="create" :category-href="'http://www.google.com'">
       <h3>Three</h3>
     </tab>
-    <tab name="Release" icon="verify">
+    <tab name="Release" icon="verify" :category-href="'http://www.google.com'">
       <h3>Four</h3>
     </tab>
-    <tab name="Configure" icon="plan">
+    <tab name="Configure" icon="plan" :category-href="'http://www.google.com'">
       <h3>Two</h3>
     </tab>
-    <tab name="Monitor" icon="create">
+    <tab name="Monitor" icon="create" :category-href="'http://www.google.com'">
       <h3>Three</h3>
     </tab>
-    <tab name="Defend" icon="verify">
+    <tab name="Defend" icon="verify" :category-href="'http://www.google.com'">
       <h3>Four</h3>
     </tab>
   </tabs>
@@ -517,16 +510,16 @@
 
   Vue.component('tabs', {
     template: `
-      <div style="width: 100%" slot-scope="hover">
+      <div style="width: 100%">
           <div class="tabs">
             <ul>
               <li v-for="tab in tabs" :class="{ 'is-active': tab.isActive }">
-                  <a :href="tab.href" @click.prevent="selectTab(tab)">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 46" enable-background="0 0 46 46">
-                      <path v-for="path in tab.path" :d="path" />
-                    </svg>
-                    {{ tab.name }}
-                  </a>
+                <a :href="tab.href" @click.prevent="selectTab(tab)">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 46" enable-background="0 0 46 46">
+                    <path v-for="path in tab.path" :d="path" />
+                  </svg>
+                  {{ tab.name }}
+                </a>
               </li>
             </ul>
           </div>
@@ -553,7 +546,7 @@
       template: `
         <div v-show="isActive" class="tabs-container">
           <div class="card-header">
-            <a href="#">
+            <a :href="categoryHref">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 46" enable-background="0 0 46 46">
                 <path v-for="path in this.path" :d="path" />
               </svg>
@@ -566,11 +559,12 @@
       props: {
         name: { required: true },
         selected: { default: false },
-        icon: { required: true }
+        icon: { required: true },
+        categoryHref: { required: true, type: String }
       },
       data() {
         return {
-          isActive: false
+          isActive: false,
         };
       },
       computed: {
@@ -590,7 +584,7 @@
     template: `
       <div class="container-feature">
         <div class="container-table">
-          <slot :hover="hover"></slot>
+          <slot @testevent="test"></slot>
         </div>
         <div class="container-hover">
           <h1>Title</h1>
@@ -603,7 +597,32 @@
         hover: ''
       }
     },
-    methods: {}
+    methods: {
+      test() {
+        console.log('wowwwwww');
+      }
+    }
+  });
+
+  Vue.component('feature-link', {
+    template: `
+      <div class="flex-cell product-feature">
+        <a :href="link" @mouseover="$parent.test()">{{ title }}</a>
+      </div>
+    `,
+    props: {
+      title: { type: String, required: true },
+      link: { type: String, required: true }
+    },
+    methods: {
+      onMouseover() {
+        //console.log('over');
+        this.$emit('clicked', 'someValue');
+      },
+      onMouseout() {
+        //console.log('outttt');
+      }
+    }
   });
 
   new Vue({

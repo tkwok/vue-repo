@@ -50,6 +50,10 @@
   .tabs-container {
     border: 1px solid #ddd;
     background-color: #fff;
+    min-height: 544px;
+  }
+
+  .container-feature {
     display: flex;
     flex-direction: row;
   }
@@ -224,6 +228,8 @@
   }
 
   .flex-cell {
+    align-items: center;
+    display: flex;
     border-right: 1px solid #ccc;
     text-align: center;
     width: 113.094px;
@@ -237,6 +243,7 @@
   }
 
   .product-feature a {
+    color: #6b4fbb;
     font-size: 18px;
   }
 
@@ -244,6 +251,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    color: #6b4fbb;
   }
 
   @media only screen and (max-width: 1199px) {
@@ -270,7 +278,9 @@
     .product-feature {
       width: 100%;
       text-align: center;
+      flex-direction: column;
     }
+
 
     .flex-cell {
       border-right: 0;
@@ -279,6 +289,10 @@
 
     .container {
       width: 100%;
+    }
+
+    .container-hover {
+      display: none;
     }
   }
 
@@ -299,8 +313,6 @@
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
       align-items: center;
       justify-content: center;
-
-
     }
   }
 
@@ -338,127 +350,130 @@
 <div id="root" class="container">
   <tabs>
     <tab name="Manage" :selected="true" icon="manage">
-      <div class="container-table">
-        <div class="flex-table">
-          <div class="flex-cell product-feature">
-            <a href="#" @mouseover="">Audit Management</a>
+      <div class="container-feature">
+        <div class="container-table">
+          <div class="flex-table">
+            <div class="flex-cell product-feature">
+              <a href="#">Audit Management</a>
+            </div>
+            <div class="flex-cell">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
+            </div>
+            <div class="flex-cell">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
+            </div>
+            <div class="flex-cell">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
+            </div>
           </div>
-          <div class="flex-cell">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
+          <div class="flex-table">
+            <div class="flex-cell product-feature">
+              <a href="#">Authorization and Authentication</a>
+            </div>
+            <div class="flex-cell">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
+            </div>
+            <div class="flex-cell">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
+            </div>
+            <div class="flex-cell">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
+            </div>
           </div>
-          <div class="flex-cell">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
+          <div class="flex-table">
+            <div class="flex-cell product-feature">
+              <a href="#">Code Analytics</a>
+            </div>
+            <div class="flex-cell">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
+            </div>
+            <div class="flex-cell">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
+            </div>
+            <div class="flex-cell">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
+            </div>
           </div>
-          <div class="flex-cell">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
+          <div class="flex-table">
+            <div class="flex-cell product-feature">
+              <a href="#">Cycle Analytics</a>
+            </div>
+            <div class="flex-cell">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
+            </div>
+            <div class="flex-cell">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
+            </div>
+            <div class="flex-cell">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
+            </div>
           </div>
-        </div>
-        <div class="flex-table">
-          <div class="flex-cell product-feature">
-            <a href="#">Authorization and Authentication</a>
+          <div class="flex-table">
+            <div class="flex-cell product-feature">
+              <a href="#">Devops Score</a>
+            </div>
+            <div class="flex-cell">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
+            </div>
+            <div class="flex-cell">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
+            </div>
+            <div class="flex-cell">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
+            </div>
           </div>
-          <div class="flex-cell">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
+          <div class="flex-table">
+            <div class="flex-cell product-feature">
+              <a href="#">Value Stream Management</a>
+            </div>
+            <div class="flex-cell">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
+            </div>
+            <div class="flex-cell">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
+            </div>
+            <div class="flex-cell">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
+            </div>
           </div>
-          <div class="flex-cell">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
-          </div>
-          <div class="flex-cell">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
-          </div>
-        </div>
-        <div class="flex-table">
-          <div class="flex-cell product-feature">
-            <a href="#">Authorization and Authentication</a>
-          </div>
-          <div class="flex-cell">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
-          </div>
-          <div class="flex-cell">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
-          </div>
-          <div class="flex-cell">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
-          </div>
-        </div>
-        <div class="flex-table">
-          <div class="flex-cell product-feature">
-            <a href="#">Authorization and Authentication</a>
-          </div>
-          <div class="flex-cell">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
-          </div>
-          <div class="flex-cell">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
-          </div>
-          <div class="flex-cell">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
-          </div>
-        </div>
-        <div class="flex-table">
-          <div class="flex-cell product-feature">
-            <a href="#">Authorization and Authentication</a>
-          </div>
-          <div class="flex-cell">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
-          </div>
-          <div class="flex-cell">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
-          </div>
-          <div class="flex-cell">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
-          </div>
-        </div>
-        <div class="flex-table">
-          <div class="flex-cell product-feature">
-            <a href="#">Authorization and Authentication</a>
-          </div>
-          <div class="flex-cell">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
-          </div>
-          <div class="flex-cell">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
-          </div>
-          <div class="flex-cell">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
-          </div>
-        </div>
-        <div class="flex-table">
-          <div class="flex-cell product-feature">
-            <a href="#">Authorization and Authentication</a>
-          </div>
-          <div class="flex-cell">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
-          </div>
-          <div class="flex-cell">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
-          </div>
-          <div class="flex-cell">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
-          </div>
-        </div>
-        <div class="flex-table">
-          <div class="flex-cell product-feature">
-            <a href="#">Authorization and Authentication</a>
-          </div>
-          <div class="flex-cell">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
-          </div>
-          <div class="flex-cell">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
-          </div>
-          <div class="flex-cell">
-            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
+          <div class="flex-table">
+            <div class="flex-cell product-feature">
+              <a href="#">Workflow Policies</a>
+            </div>
+            <div class="flex-cell">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
+            </div>
+            <div class="flex-cell">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
+            </div>
+            <div class="flex-cell">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
+            </div>
           </div>
         </div>
-      </div>
-      <div class="container-hover">
-        <h1>Title</h1>
-        <p>Description</p>
+        <div class="container-hover">
+          <h1>Title</h1>
+          <p>Description</p>
+        </div>
       </div>
     </tab>
     <tab name="Plan" icon="plan">
-      <h3>Two</h3>
+      <feature-table>
+        <div class="flex-table">
+          <div class="flex-cell product-feature">
+            <a href="#" @mouseover="hover='wowwwwww'">Audit Management</a>
+          </div>
+          <div class="flex-cell">
+            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
+          </div>
+          <div class="flex-cell">
+            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
+          </div>
+          <div class="flex-cell">
+            <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
+          </div>
+        </div>
+      </feature-table>
     </tab>
     <tab name="Create" icon="create">
       <h3>Three</h3>
@@ -536,7 +551,7 @@
 
   Vue.component('tab', {
       template: `
-        <div v-show="isActive" class="tabs-container" slot-scope="hover">
+        <div v-show="isActive" class="tabs-container">
           <div class="card-header">
             <a href="#">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 46" enable-background="0 0 46 46">
@@ -545,7 +560,7 @@
               <p>{{ this.name }}</p>
             </a>
           </div>
-          <slot :hover="hover"></slot>
+          <slot></slot>
         </div>
       `,
       props: {
@@ -555,17 +570,8 @@
       },
       data() {
         return {
-          isActive: false,
-          isResponsiveView: false,
-          hover: false
+          isActive: false
         };
-      },
-      created() {
-        window.addEventListener('resize', this.handleResize);
-        this.handleResize();
-      },
-      destroyed() {
-        window.removeEventListener('resize', this.handleResize);
       },
       computed: {
         href() {
@@ -575,14 +581,29 @@
           return icons[this.icon];
         }
       },
-      methods: {
-        handleResize() {
-          this.isResponsiveView = window.innerWidth < 1200;
-        }
-      },
       mounted() {
         this.isActive = this.selected;
       }
+  });
+
+  Vue.component('feature-table', {
+    template: `
+      <div class="container-feature">
+        <div class="container-table">
+          <slot :hover="hover"></slot>
+        </div>
+        <div class="container-hover">
+          <h1>Title</h1>
+          <p>Description</p>
+        </div>
+      </div>
+    `,
+    data() {
+      return {
+        hover: ''
+      }
+    },
+    methods: {}
   });
 
   new Vue({

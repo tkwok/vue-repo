@@ -275,17 +275,25 @@
       padding-left: 10px;
     }
 
+
+    .flex-cell {
+      border-right: 0;
+      flex-grow: 1;
+      width: initial;
+    }
+    
     .product-feature {
       width: 100%;
       text-align: center;
       flex-direction: column;
     }
 
-
-    .flex-cell {
-      border-right: 0;
-      flex-grow: 1;
+    .container-table {
+      width: 100%;
+      margin-bottom: 40px;
     }
+
+
 
     .container {
       width: 100%;
@@ -301,6 +309,9 @@
       box-shadow: none;
     }
 
+    .product-feature {
+
+    }
     .tabs {
       display: none;
     }
@@ -350,9 +361,13 @@
 <div id="root" class="container">
   <tabs>
     <tab name="Manage" :selected="true" icon="manage" :category-href="'http://www.google.com'">
-      <feature-table @clicked="onClickChild('323232')">
+      <feature-table default-title="SOme Title" default-description="Some Desc">
           <div class="flex-table">
-            <feature-link title="Audit Management" link="'http://www.yahoo.com'" rollover-text="'fsdfsdfsdfsdsd'"></feature-link>
+            <feature-link
+              title="Audit Management"
+              link="http://www.yahoo.com"
+              hover-description="A test message">
+            </feature-link>
             <div class="flex-cell">
               <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
             </div>
@@ -364,9 +379,11 @@
             </div>
           </div>
           <div class="flex-table">
-            <div class="flex-cell product-feature">
-              <a href="#">Authorization and Authentication</a>
-            </div>
+            <feature-link
+              title="Authorization and Authentication"
+              link="http://www.google.com"
+              hover-description="A different test message">
+            </feature-link>
             <div class="flex-cell">
               <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
             </div>
@@ -447,7 +464,20 @@
               <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
             </div>
           </div>
-
+          <div class="flex-table">
+            <div class="flex-cell product-feature">
+              <a href="#">One More Policies</a>
+            </div>
+            <div class="flex-cell">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
+            </div>
+            <div class="flex-cell">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/azure-devops-logo.png" />
+            </div>
+            <div class="flex-cell">
+              <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
+            </div>
+          </div>
       </feature-table>
     </tab>
     <tab name="Plan" icon="plan" :category-href="'http://www.google.com'">
@@ -587,19 +617,30 @@
           <slot @testevent="test"></slot>
         </div>
         <div class="container-hover">
-          <h1>Title</h1>
-          <p>Description</p>
+          <h1>{{ title }}</h1>
+          <p>{{ description }}</p>
         </div>
       </div>
     `,
+    props: {
+      defaultTitle: { type: String, required: false },
+      defaultDescription: { type: String, required: false }
+    },
     data() {
       return {
-        hover: ''
+        hover: '',
+        title: this.defaultTitle,
+        description: this.defaultDescription
       }
     },
     methods: {
-      test() {
-        console.log('wowwwwww');
+      mouseOver(title, description) {
+        this.title = title;
+        this.description = description;
+      },
+      mouseOut() {
+        this.title = this.defaultTitle;
+        this.description = this.defaultDescription;
       }
     }
   });
@@ -607,20 +648,22 @@
   Vue.component('feature-link', {
     template: `
       <div class="flex-cell product-feature">
-        <a :href="link" @mouseover="$parent.test()">{{ title }}</a>
+        <a :href="link"
+          @mouseover="$parent.mouseOver(title, hoverDescription)"
+          @mouseout="$parent.mouseOut()">{{ title }}
+        </a>
       </div>
     `,
     props: {
       title: { type: String, required: true },
-      link: { type: String, required: true }
+      link: { type: String, required: true },
+      hoverDescription: { type: String, required: false }
     },
     methods: {
       onMouseover() {
-        //console.log('over');
         this.$emit('clicked', 'someValue');
       },
       onMouseout() {
-        //console.log('outttt');
       }
     }
   });

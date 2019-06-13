@@ -252,6 +252,11 @@
     flex-direction: column;
     justify-content: center;
     color: #6b4fbb;
+    max-width: 430px;
+  }
+
+  .hover-description {
+    display: none;
   }
 
   @media only screen and (max-width: 1199px) {
@@ -275,17 +280,17 @@
       padding-left: 10px;
     }
 
-
     .flex-cell {
       border-right: 0;
       flex-grow: 1;
-      width: initial;
+      width: unset;
     }
-    
+
     .product-feature {
-      width: 100%;
-      text-align: center;
-      flex-direction: column;
+      width: 40%;
+      display: unset;
+      margin-right: 20px;
+      padding-bottom: 0;
     }
 
     .container-table {
@@ -293,14 +298,16 @@
       margin-bottom: 40px;
     }
 
-
-
     .container {
       width: 100%;
     }
 
     .container-hover {
       display: none;
+    }
+
+    .hover-description {
+      display: flex;
     }
   }
 
@@ -366,7 +373,7 @@
             <feature-link
               title="Audit Management"
               link="http://www.yahoo.com"
-              hover-description="A test message">
+              hover-description="Remind me to thank John for a lovely weekend. My dad once told me, laugh and the world laughs with you, Cry, and I'll give you something to cry about you little bastard! ">
             </feature-link>
             <div class="flex-cell">
               <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
@@ -382,7 +389,7 @@
             <feature-link
               title="Authorization and Authentication"
               link="http://www.google.com"
-              hover-description="A different test message">
+              hover-description="Remind me to thank John for a lovely weekend. My dad once told me, laugh and the world laughs with you, Cry, and I'll give you something to cry about you little bastard! ">
             </feature-link>
             <div class="flex-cell">
               <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
@@ -652,6 +659,9 @@
           @mouseover="$parent.mouseOver(title, hoverDescription)"
           @mouseout="$parent.mouseOut()">{{ title }}
         </a>
+        <div class="hover-description">
+          <h4>{{ hoverDescription }}</h4>
+        </div>
       </div>
     `,
     props: {

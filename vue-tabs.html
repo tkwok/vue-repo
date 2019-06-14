@@ -316,9 +316,6 @@
       box-shadow: none;
     }
 
-    .product-feature {
-
-    }
     .tabs {
       display: none;
     }
@@ -373,6 +370,7 @@
             <feature-link
               title="Audit Management"
               link="http://www.yahoo.com"
+              hover-title="Some Title"
               hover-description="Remind me to thank John for a lovely weekend. My dad once told me, laugh and the world laughs with you, Cry, and I'll give you something to cry about you little bastard! ">
             </feature-link>
             <div class="flex-cell">
@@ -389,6 +387,7 @@
             <feature-link
               title="Authorization and Authentication"
               link="http://www.google.com"
+              hover-title="Some Title New "
               hover-description="Remind me to thank John for a lovely weekend. My dad once told me, laugh and the world laughs with you, Cry, and I'll give you something to cry about you little bastard! ">
             </feature-link>
             <div class="flex-cell">
@@ -635,7 +634,6 @@
     },
     data() {
       return {
-        hover: '',
         title: this.defaultTitle,
         description: this.defaultDescription
       }
@@ -656,7 +654,7 @@
     template: `
       <div class="flex-cell product-feature">
         <a :href="link"
-          @mouseover="$parent.mouseOver(title, hoverDescription)"
+          @mouseover="$parent.mouseOver(hoverTitle, hoverDescription)"
           @mouseout="$parent.mouseOut()">{{ title }}
         </a>
         <div class="hover-description">
@@ -667,13 +665,12 @@
     props: {
       title: { type: String, required: true },
       link: { type: String, required: true },
+      hoverTitle: { type: String, required: false },
       hoverDescription: { type: String, required: false }
     },
     methods: {
       onMouseover() {
         this.$emit('clicked', 'someValue');
-      },
-      onMouseout() {
       }
     }
   });

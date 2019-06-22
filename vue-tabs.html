@@ -366,12 +366,12 @@
   <tabs>
     <tab name="Manage" :selected="true" icon="manage" :category-href="'http://www.google.com'">
       <feature-table default-title="Some Title" default-description="Some Desc">
-          <div class="flex-table">
+          <feature-row
+            hover-title="Some Title 121211"
+            hover-description="Remind me to thank John for a lovely weekend. My dad once told me, laugh and the world laughs with you, Cry, and I'll give you something to cry about you little bastard! ">
             <feature-link
               title="Audit Management"
-              link="http://www.yahoo.com"
-              hover-title="Some Title"
-              hover-description="Remind me to thank John for a lovely weekend. My dad once told me, laugh and the world laughs with you, Cry, and I'll give you something to cry about you little bastard! ">
+              link="http://www.yahoo.com">
             </feature-link>
             <div class="flex-cell">
               <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
@@ -382,13 +382,15 @@
             <div class="flex-cell">
               <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
             </div>
-          </div>
-          <div class="flex-table">
+          </feature-row>
+          <feature-row
+            hover-title="New Title AAAAAA"
+            hover-description="Nothing here John ">
             <feature-link
               title="Authorization and Authentication"
               link="http://www.google.com"
-              hover-title="Some Title New "
-              hover-description="Remind me to thank John for a lovely weekend. My dad once told me, laugh and the world laughs with you, Cry, and I'll give you something to cry about you little bastard! ">
+              hover-title="Some Title New 2323232 "
+              hover-description="wowwww2323232323232">
             </feature-link>
             <div class="flex-cell">
               <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/gitlab-logo.svg" />
@@ -399,7 +401,8 @@
             <div class="flex-cell">
               <img class="product-icon" src="https://about.gitlab.com/images/devops-tools/github-logo.svg" />
             </div>
-          </div>
+          </feature-row>
+
           <div class="flex-table">
             <div class="flex-cell product-feature">
               <a href="#">Code Analytics</a>
@@ -666,16 +669,27 @@
     }
   });
 
+  Vue.component('feature-row', {
+    template: `<div class="flex-table"
+      @mouseover="$parent.mouseOver(hoverTitle, hoverDescription)"
+      @mouseout="$parent.mouseOut()">
+      <slot></slot>
+    </div>`,
+    props: {
+      hoverTitle: { type: String, required: false },
+      hoverDescription: { type: String, required: false }
+    }
+  });
+/*
+
+@mouseover="$parent.mouseOver(hoverTitle, hoverDescription)"
+@mouseout="$parent.mouseOut()"
+*/
   Vue.component('feature-link', {
     template: `
       <div class="flex-cell product-feature">
-        <a :href="link"
-          @mouseover="$parent.mouseOver(hoverTitle, hoverDescription)"
-          @mouseout="$parent.mouseOut()">{{ title }}
+        <a :href="link">{{ title }}
         </a>
-        <div class="hover-description">
-          <h4>{{ hoverDescription }}</h4>
-        </div>
       </div>
     `,
     props: {

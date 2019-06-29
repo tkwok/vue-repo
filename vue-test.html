@@ -46,7 +46,6 @@
     margin: 0;
   }
 
-
   .bk {
     transition: all 0.1s ease-out;
   }
@@ -60,9 +59,10 @@
 
 <div id="app">
   <some-input v-model="selected" :options="[
-    { value: 1, name: 'United States' },
-    { value: 2, name: 'China' },
-  ]" v-on:changed="eventChanged"></some-input>
+    { value: 200, name: 'United States' },
+    { value: 400, name: 'China' }]"
+    v-on:changed="eventChanged">
+  </some-input>
   <h6>{{ selected }}</h6>
   <div class="input-container-parent">
     <calculator-numeric-input
@@ -103,14 +103,14 @@
 //<input type="number" :value="value" @input="$emit('input', $event.target.value)" />
   const calculatorNumericInput = {
     props: {
-      label: { type: String, required: true }
+      label: { type: String, required: true },
+      value: { required: false }
     },
     data: function() {
       return {
         showEditView: false,
         bkClass: 'bk',
-        blueClass: 'blur',
-        value: 0
+        blueClass: 'blur'
       }
     },
     directives: {
@@ -119,7 +119,6 @@
           if (typeof binding.value === 'function') {
             const handler = (event) => {
               if (binding.modifiers.bubble || -1 == event.path.indexOf(el)) {
-//              if (binding.modifiers.bubble || (!el.contains(event.target) && el !== event.target)) {
               	binding.value(event);
               }
             };
@@ -141,13 +140,11 @@
             this.$refs.inputValue.focus();
           });
         }
-        //console.log(event.target);
       },
       toggleOutsideView: function(event) {
         this.showEditView = false;
       }
     },
-    //            <span :class="[showEditView ? blueClass : '', bkClass]">
 
     template: `
       <div class="input-container" @click="toggleView" v-click-outside="toggleOutsideView" >
@@ -187,7 +184,7 @@
     },
     methods: {
       eventChanged: function(value) {
-        console.log('changed from child', value);
+        console.log('changed to option', value);
       },
       onChange: function(event) {
         console.log(event.target.value);
@@ -200,10 +197,10 @@
         var vm = this;
         return Object.assign({},
         this.$listeners, {
-            input: function (event) {
-              this.benefits.commute *= 5;
-              vm.$emit('input', event.target.value);
-            }
+          input: function (event) {
+            this.benefits.commute *= 5;
+            vm.$emit('input', event.target.value);
+          }
         });
       },
       setFocus: function() {

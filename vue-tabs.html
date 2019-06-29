@@ -695,13 +695,6 @@
     props: {
       title: { type: String, required: true },
       link: { type: String, required: true },
-      hoverTitle: { type: String, required: false },
-      hoverDescription: { type: String, required: false }
-    },
-    methods: {
-      onMouseover() {
-        this.$emit('clicked', 'someValue');
-      }
     }
   });
 

@@ -19,7 +19,9 @@
     font-weight: 600;
     line-height: 1.2;
     color: inherit;
-}
+  }
+
+  [v-cloak] > * { display: none }
 
   div {
     display: block;
@@ -362,7 +364,7 @@
 </style>
 
 
-<div id="root" class="container">
+<div id="root" class="container" v-cloak>
   <tabs>
     <tab name="Manage" :selected="true" icon="manage" :category-href="'http://www.google.com'">
       <feature-table default-title="Some Title" default-description="Some Desc">

@@ -55,6 +55,14 @@
     opacity: 0.4;
   }
 
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+
+  .fade-enter, .fade-leave-to {
+    opacity: 0;
+  }
 </style>
 
 <div id="app">
@@ -150,9 +158,11 @@
       <div class="input-container" @click="toggleView" v-click-outside="toggleOutsideView" >
           <span v-if="!showEditView">
 
-            <span class="title">
-              {{ label }}
-            </span>
+            <transition name="fade">
+              <span class="title">
+                {{ label }}
+              </span>
+            </transition>
 
             <span class="value">
               {{ value }}

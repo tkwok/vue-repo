@@ -17,9 +17,10 @@
     position: relative;
   }
 
-  .input-container, .input-container input {
+  .input-container, .input-container .input-element {
     font-family: "Source Sans Pro", sans-serif;
     font-size: 16px;
+    color: #333;
   }
 
   .input-container .title {
@@ -29,14 +30,28 @@
     padding-bottom: 5px;
   }
 
-  .input-container input {
+  .input-container .input-element {
     border: 0;
     position: absolute;
     top: 50%;
+    left: 10px;
     transform: translateY(-50%);
   }
 
-  .input-container input:focus {
+  .input-container .input-element::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #aaa;
+    opacity: 1; /* Firefox */
+  }
+
+  .input-container .input-element:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #aaa;
+  }
+
+  .input-container .input-element::-ms-input-placeholder { /* Microsoft Edge */
+    color: #aaa;
+  }
+
+  .input-container .input-element:focus {
     outline: none;
   }
 
@@ -46,32 +61,24 @@
     margin: 0;
   }
 
-  .bk {
-    transition: all 0.1s ease-out;
-  }
-
-  .blur {
-    filter: blur(2px);
-    opacity: 0.4;
-  }
-
-
   .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s;
+    transition: opacity .1s;
   }
 
   .fade-enter, .fade-leave-to {
     opacity: 0;
   }
+
 </style>
 
 <div id="app">
   <some-input v-model="selected" :options="[
-    { value: 200, name: 'United States' },
-    { value: 400, name: 'China' }]"
+    { value: 0.5, name: 'United States' },
+    { value: 200, name: 'China' }]"
     v-on:changed="eventChanged">
   </some-input>
   <h6>{{ selected }}</h6>
+
   <div class="input-container-parent">
     <calculator-numeric-input
       v-model="benefits.commute"
@@ -81,6 +88,7 @@
     </calculator-numeric-input>
   </div>
   <h6>{{ benefits.commute }}</h6>
+
   <div class="input-container-parent">
     <calculator-numeric-input v-model="benefits.meals"
       label="Transportation"
@@ -89,6 +97,15 @@
     </calculator-numeric-input>
   </div>
   <h6>{{ benefits.meals }}</h6>
+
+  <div class="input-container-parent">
+    <calculator-numeric-input v-model="benefits.hotels"
+      label="Hotels"
+      @click="toggleView()"
+      placeholder="Hotels">
+    </calculator-numeric-input>
+  </div>
+  <h6>{{ benefits.hotels }}</h6>
 </div>
 
 
@@ -116,9 +133,7 @@
     },
     data: function() {
       return {
-        showEditView: false,
-        bkClass: 'bk',
-        blueClass: 'blur'
+        showEditView: false
       }
     },
     directives: {
@@ -147,7 +162,10 @@
           this.$nextTick(() => {
             this.$refs.inputValue.focus();
           });
+        } else {
+
         }
+
       },
       toggleOutsideView: function(event) {
         this.showEditView = false;
@@ -155,23 +173,23 @@
     },
 
     template: `
-      <div class="input-container" @click="toggleView" v-click-outside="toggleOutsideView" >
-          <span v-if="!showEditView">
-
-            <transition name="fade">
-              <span class="title">
-                {{ label }}
-              </span>
-            </transition>
-
-            <span class="value">
-              {{ value }}
-            </span>
+      <div class="input-container" @click="toggleView" v-click-outside="toggleOutsideView">
+        <transition name="fade">
+          <span class="title" v-if="!showEditView">
+            {{ label }}
           </span>
         </transition>
+
+        <transition name="fade">
+          <span class="value" v-if="!showEditView">
+            {{ value }}
+          </span>
+        </transition>
+
         <span v-if="showEditView">
-          <input type="number" ref="inputValue" v-model="value" @input="$emit('input', $event.target.value)" />
+          <input class="input-element" type="number" ref="inputValue" placeholder="Hotels" v-model="value" @input="$emit('input', $event.target.value)" />
         </span>
+
       </div>`
   };
 
@@ -194,7 +212,7 @@
     },
     methods: {
       eventChanged: function(value) {
-        console.log('changed to option', value);
+        this.benefits.commute *= value;
       },
       onChange: function(event) {
         console.log(event.target.value);

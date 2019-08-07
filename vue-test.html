@@ -3,10 +3,6 @@
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
 
 <style>
-  .input-container-parent {
-    width: 13%;
-  }
-
   .input-container {
     border: 1px solid #eaeaea;
     border-radius: 4px;
@@ -21,6 +17,8 @@
     font-family: "Source Sans Pro", sans-serif;
     font-size: 16px;
     color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .input-container .title {
@@ -72,27 +70,24 @@
 </style>
 
 <div id="app">
-  <some-input v-model="selected" :options="[
-    { value: 0.5, name: 'United States' },
-    { value: 200, name: 'China' }]"
+  <some-input v-model="selected" :options="countryOptions"
     v-on:changed="eventChanged">
   </some-input>
   <h6>{{ selected }}</h6>
 
-  <div class="input-container-parent">
-    <calculator-numeric-input
-      v-model="benefits.commute"
-      label="Rent"
-      @click="toggleView()"
-      placeholder="Rent">
-    </calculator-numeric-input>
+  <div style="width: 13%">
+    <div class="input-container-parent">
+      <calculator-numeric-input
+        v-model="benefits.commute"
+        label="Rent"
+        placeholder-text="Rent">
+      </calculator-numeric-input>
+    </div>
+    <h6>{{ benefits.commute }}</h6>
   </div>
-  <h6>{{ benefits.commute }}</h6>
-
   <div class="input-container-parent">
     <calculator-numeric-input v-model="benefits.meals"
       label="Transportation"
-      @click="toggleView()"
       placeholder="Transportation">
     </calculator-numeric-input>
   </div>
@@ -101,7 +96,6 @@
   <div class="input-container-parent">
     <calculator-numeric-input v-model="benefits.hotels"
       label="Hotels"
-      @click="toggleView()"
       placeholder="Hotels">
     </calculator-numeric-input>
   </div>
@@ -110,10 +104,17 @@
 
 
 <script>
+  Vue.config.devtools = true;
+
   const someInput = {
     props: {
       options: { type: Array, default: () => [] },
       value: { default: null }
+    },
+    data: function() {
+      return {
+        countryOptions: [{ value: 0.5, name: 'United States' },{ value: 200, name: 'China' }]
+      }
     },
     methods: {
       update: function(value) {
@@ -125,15 +126,17 @@
         <option v-for='item of options' :value='item.value'>{{item.name}}</option>
       </select>`
   };
-//<input type="number" :value="value" @input="$emit('input', $event.target.value)" />
+
   const calculatorNumericInput = {
     props: {
       label: { type: String, required: true },
-      value: { required: false }
+      value: { required: false },
+      placeholderText: { type: String }
     },
     data: function() {
       return {
-        showEditView: false
+        showEditView: false,
+        value: 0
       }
     },
     directives: {
@@ -187,7 +190,7 @@
         </transition>
 
         <span v-if="showEditView">
-          <input class="input-element" type="number" ref="inputValue" placeholder="Hotels" v-model="value" @input="$emit('input', $event.target.value)" />
+          <input class="input-element" type="number" ref="inputValue" :placeholder="placeholderText" v-model="value" @input="$emit('input', $event.target.value)" />
         </span>
 
       </div>`
@@ -218,7 +221,7 @@
         console.log(event.target.value);
       },
       updateCoachStatus: function(){
-        this.benefits.commute = 200;
+        // this.benefits.commute = 200;
         this.benefits.meals = 400;
       },
       inputListeners: function () {

@@ -80,23 +80,28 @@
       <calculator-numeric-input
         v-model="benefits.commute"
         label="Rent"
+        default-value="111"
         placeholder-text="Rent">
       </calculator-numeric-input>
     </div>
     <h6>{{ benefits.commute }}</h6>
   </div>
   <div class="input-container-parent">
-    <calculator-numeric-input v-model="benefits.meals"
+    <calculator-numeric-input
+      v-model="benefits.meals"
       label="Transportation"
-      placeholder="Transportation">
+      default-value="222"
+      placeholder-text="Transportation">
     </calculator-numeric-input>
   </div>
   <h6>{{ benefits.meals }}</h6>
 
   <div class="input-container-parent">
-    <calculator-numeric-input v-model="benefits.hotels"
+    <calculator-numeric-input
+      v-model="benefits.hotels"
+      default-value="333"
       label="Hotels"
-      placeholder="Hotels">
+      placeholder-text="Hotels">
     </calculator-numeric-input>
   </div>
   <h6>{{ benefits.hotels }}</h6>
@@ -109,11 +114,11 @@
   const someInput = {
     props: {
       options: { type: Array, default: () => [] },
-      value: { default: null }
+      defaultValue: { default: null }
     },
     data: function() {
       return {
-        countryOptions: [{ value: 0.5, name: 'United States' },{ value: 200, name: 'China' }]
+        countryOptions: [{ value: 0.5, name: 'United States' }, { value: 200, name: 'China' }]
       }
     },
     methods: {
@@ -130,14 +135,17 @@
   const calculatorNumericInput = {
     props: {
       label: { type: String, required: true },
-      value: { required: false },
-      placeholderText: { type: String }
+      placeholderText: { type: String },
+      defaultValue: { type: Number }
     },
     data: function() {
       return {
-        showEditView: false,
-        value: 0
+        showEditView: false
       }
+    },
+    beforeMount: function() {
+      this.value = this.defaultValue;
+      this.$emit('input', this.defaultValue);
     },
     directives: {
       'click-outside': {
@@ -165,10 +173,7 @@
           this.$nextTick(() => {
             this.$refs.inputValue.focus();
           });
-        } else {
-
         }
-
       },
       toggleOutsideView: function(event) {
         this.showEditView = false;
@@ -190,7 +195,12 @@
         </transition>
 
         <span v-if="showEditView">
-          <input class="input-element" type="number" ref="inputValue" :placeholder="placeholderText" v-model="value" @input="$emit('input', $event.target.value)" />
+          <input class="input-element"
+            type="number"
+            ref="inputValue"
+            :placeholder="placeholderText"
+            :value="value"
+            @input="$emit('input', $event.target.value)" />
         </span>
 
       </div>`
@@ -222,7 +232,7 @@
       },
       updateCoachStatus: function(){
         // this.benefits.commute = 200;
-        this.benefits.meals = 400;
+        //this.benefits.meals = 400;
       },
       inputListeners: function () {
         var vm = this;

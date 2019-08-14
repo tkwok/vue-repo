@@ -1,6 +1,8 @@
 <!doctype html>
 
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-select@latest"></script>
+<link rel="stylesheet" href="https://unpkg.com/vue-select@latest/dist/vue-select.css">
 
 <style>
   .input-container {
@@ -70,17 +72,25 @@
 </style>
 
 <div id="app">
-  <some-input v-model="selected" :options="countryOptions"
+  <!-- <some-input v-model="selected" :options="countryOptions"
     v-on:changed="eventChanged">
   </some-input>
-  <h6>{{ selected }}</h6>
+  <h6>{{ selected }}</h6> -->
+
+  <select-test
+    v-bind:searchable="true"
+    v-bind:options="countries"
+    v-model="currentCountry"
+    label="Country"
+    title-field="Country"></select-test>
 
   <div style="width: 13%">
     <div class="input-container-parent">
       <calculator-numeric-input
+        id="commute"
         v-model="benefits.commute"
         label="Rent"
-        default-value="111"
+        default-value="123456"
         placeholder-text="Rent">
       </calculator-numeric-input>
     </div>
@@ -88,28 +98,21 @@
   </div>
   <div class="input-container-parent">
     <calculator-numeric-input
+      id="meals"
       v-model="benefits.meals"
       label="Transportation"
-      default-value="222"
+      default-value="999999999"
       placeholder-text="Transportation">
     </calculator-numeric-input>
   </div>
   <h6>{{ benefits.meals }}</h6>
-
-  <div class="input-container-parent">
-    <calculator-numeric-input
-      v-model="benefits.hotels"
-      default-value="333"
-      label="Hotels"
-      placeholder-text="Hotels">
-    </calculator-numeric-input>
-  </div>
-  <h6>{{ benefits.hotels }}</h6>
 </div>
 
 
 <script>
   Vue.config.devtools = true;
+
+  Vue.component('v-select', VueSelect.VueSelect);
 
   const someInput = {
     props: {
@@ -136,7 +139,7 @@
     props: {
       label: { type: String, required: true },
       placeholderText: { type: String },
-      defaultValue: { type: Number }
+      defaultValue: { type: String }
     },
     data: function() {
       return {
@@ -167,6 +170,11 @@
       }
     },
     methods: {
+      changed: function(event) {
+        this.value = event.target.value;
+        this.$emit('input', event.target.value);
+        this.$parent.$emit('inputChanged', event.target.value);
+      },
       toggleView: function(event) {
         this.showEditView = !this.showEditView;
         if (this.showEditView) {
@@ -179,7 +187,6 @@
         this.showEditView = false;
       }
     },
-
     template: `
       <div class="input-container" @click="toggleView" v-click-outside="toggleOutsideView">
         <transition name="fade">
@@ -200,17 +207,61 @@
             ref="inputValue"
             :placeholder="placeholderText"
             :value="value"
-            @input="$emit('input', $event.target.value)" />
+            @input="changed" />
         </span>
 
       </div>`
   };
 
+  const selectTest = {
+    props: {
+        disabled: { type: Boolean, default: false },
+        clearable: { type: Boolean, default: false },
+        searchable: { type: Boolean, default: false },
+        options: { type: Array, required: true },
+        label: { type: String, required: true },
+        titleField: { type: String, required: true },
+        optionValue: { type: Function, required: false },
+        value: { default: null }
+    },
+    mounted: function () {
+      this.$on('input', function (event) {
+        this.$parent.$emit('selectChanged', event);
+      });
+    },
+    template: `<v-select
+      :placeholder="label"
+      :disabled="disabled"
+      :clearable="clearable"
+      :options="options"
+      :searchable="searchable"
+      label="name"
+      :value="value"
+      @input="$emit('input', $event)">
+      </v-select>`
+  }
+
   new Vue({
     el: '#app',
     components: {
-      'some-input': someInput,
+      'select-test': selectTest,
       'calculator-numeric-input': calculatorNumericInput
+    },
+    mounted: function () {
+      //this.backup = Object.assign({}, this.benefits);
+
+      this.$on('selectChanged', function (event) {
+        //console.log(this.benefits);
+        this.benefits.commute = 555;
+
+      });
+
+      this.$on('inputChanged', function (event) {
+        //console.log('caught in parent input', event);
+
+        //console.log(this.backup);
+
+      });
     },
     data: function() {
       return {
@@ -219,37 +270,21 @@
           commute: null,
           meals: null
         },
-        selected: this.value,
-        countries: ['china', 'ameria', 'taiwan']
+        backup: null,
+        countries:
+        [{ name: 'China', value: 999 },
+         { name: 'America', value: 1 },
+         { name: 'Germany', value: 0.2 }],
+        currentCountry: null
       };
     },
     methods: {
-      eventChanged: function(value) {
-        this.benefits.commute *= value;
-      },
-      onChange: function(event) {
-        console.log(event.target.value);
-      },
-      updateCoachStatus: function(){
-        // this.benefits.commute = 200;
-        //this.benefits.meals = 400;
-      },
-      inputListeners: function () {
-        var vm = this;
-        return Object.assign({},
-        this.$listeners, {
-          input: function (event) {
-            this.benefits.commute *= 5;
-            vm.$emit('input', event.target.value);
-          }
-        });
+      getRef: function() {
+        console.log(this);
       },
       setFocus: function() {
         this.$refs.search.focus();
       }
-    },
-    mounted: function () {
-      this.updateCoachStatus();
     }
   });
 </script>

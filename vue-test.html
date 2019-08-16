@@ -77,7 +77,8 @@
     v-bind:options="countries"
     v-model="currentCountry"
     label="Country"
-    title-field="Country"></select-test>
+    title-field="Country">
+  </select-test>
 
   <div style="width: 13%">
     <div class="input-container-parent">
@@ -146,7 +147,7 @@
       }
     },
     methods: {
-      inputChanged: function(event) {
+      inputChange: function(event) {
         this.defValue = parseInt(event.target.value);
         this.$emit('input', event.target.value);
         this.$parent.$emit('inputChanged', { fieldName: this.fieldName, value: parseInt(event.target.value)} );
@@ -183,7 +184,7 @@
             ref="inputValue"
             :placeholder="placeholderText"
             :value="value"
-            @input="inputChanged" />
+            @input="inputChange" />
         </span>
 
       </div>`
@@ -191,14 +192,14 @@
 
   const selectTest = {
     props: {
-        disabled: { type: Boolean, default: false },
-        clearable: { type: Boolean, default: false },
-        searchable: { type: Boolean, default: false },
-        options: { type: Array, required: true },
-        label: { type: String, required: true },
-        titleField: { type: String, required: true },
-        optionValue: { type: Function, required: false },
-        value: { default: null }
+      disabled: { type: Boolean, default: false },
+      clearable: { type: Boolean, default: false },
+      searchable: { type: Boolean, default: false },
+      options: { type: Array, required: true },
+      label: { type: String, required: true },
+      titleField: { type: String, required: true },
+      optionValue: { type: Function, required: false },
+      value: { default: null }
     },
     mounted: function () {
       this.$on('input', function (event) {

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+	.container {
+	  width: 400px;
+	  height: 300px;
+	  background-color: blue;
+	  position: relative;
+	}
+
+	.round-button {
+	  position: absolute;
+	  cursor: pointer;
+	  top: -15px;
+	  right: -15px;
+	  background-color: #fff;
+	  -moz-border-radius: 22px;
+	  -webkit-border-radius: 22px;
+	  border-radius: 22px;
+	  border: 2px solid #ff8325;
+	  display: inline-block;
+	  cursor: pointer;
+	  color: #ff8426;
+	  font-family: Arial;
+	  font-size: 16px;
+	  padding: 3px 8px;
+	  text-decoration: none;
+	  width: 33px;
+	  height: 33px;
+	}
+
+	.round-button:before {
+	  transform: rotate(45deg);
+	}
+
+	.round-button:after {
+	  transform: rotate(-45deg);
+	}
+
+	.round-button:before,
+	.round-button:after {
+	  position: absolute;
+	  top: 5px;
+	  left: 15px;
+	  content: ' ';
+	  height: 20px;
+	  width: 3px;
+	  margin-left: -2px;
+	  background-color: #ff8426;
+	}
+
+	.round-button:hover {
+	  background-color: #ff8426;
+	  color: #fff;
+	}
+
+	.round-button:hover::before,
+	.round-button:hover::after {
+	    background-color: #fff;
+	}
+</style>
+</head>
+
+<body>
+	<div class="container">
+	  <button class="round-button"></button>
+	</div>
+</body>
